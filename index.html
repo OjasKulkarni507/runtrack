@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0a0e12"><title>RunTrack</title>
+<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg"><link rel="apple-touch-icon" href="icon.svg">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
+<link rel="stylesheet" href="styles.css"></head>
+<body>
+<header><h1>RunTrack</h1><span id="vs" class="pill">Voice: on</span><span id="wl" class="pill">Screen: –</span><span id="gps" class="pill">GPS: off</span><button id="bHist" class="sm">History</button></header>
+<main>
+<div id="msg" role="status" aria-live="polite" hidden></div>
+<div id="recov" class="card" hidden><span id="recovTxt"></span><div class="row2"><button id="bRecov">Restore run</button><button id="bDisc" class="danger">Discard</button></div></div>
+
+<section id="setup" class="card" aria-label="Run setup">
+<p class="note">Your location stays on this device. It is requested only when you tap Start, to measure distance and draw your route.</p>
+<label for="gk">Goal</label>
+<select id="gk" class="pref"><option value="none">No goal</option><option value="distance">Distance</option><option value="time">Time</option></select>
+<div id="gvRow" hidden><label for="gv" id="gl">Distance (km)</label><input id="gv" class="pref" type="number" inputmode="decimal" step="any" min="0" list="dl-distance" placeholder="Pick or type a value"></div>
+<datalist id="dl-distance"><option value="1"><option value="2"><option value="3"><option value="5"><option value="10"></datalist>
+<datalist id="dl-time"><option value="10"><option value="15"><option value="20"><option value="30"><option value="45"></datalist>
+<label for="name">Session name (optional)</label><input id="name" maxlength="40">
+<label class="chk"><input type="checkbox" id="voice" class="pref" checked> Voice announcements</label>
+<label class="chk"><input type="checkbox" id="sound" class="pref" checked> Sounds</label>
+<label for="lang">Voice language</label><select id="lang" class="pref"><option value="">Auto</option></select>
+<label for="rate">Speech rate</label><input id="rate" class="pref" type="range" min=".7" max="1.4" step=".1" value="1">
+<label for="vol">Volume</label><input id="vol" class="pref" type="range" min="0" max="1" step=".1" value="1">
+<button id="bTest">Test announcement</button>
+</section>
+
+<section class="card big" aria-label="Distance and time">
+<div><b id="dist">0.00</b><small>kilometres</small></div><div><b id="time">00:00</b><small>running time</small></div></section>
+<p id="goalTxt" class="goal" hidden></p>
+<section class="card grid" aria-label="Pace and speed">
+<div><b id="pace">--:--</b><small>pace /km</small></div><div><b id="apace">--:--</b><small>avg pace /km</small></div><div><b id="accv">--</b><small>GPS accuracy</small></div>
+<div><b id="spd">--</b><small>speed km/h</small></div><div><b id="aspd">--</b><small>avg km/h</small></div><div><b id="km">0</b><small>km completed</small></div></section>
+<div class="mapwrap"><div id="map" aria-label="Live route map"></div><button id="recenter" class="sm" hidden>Recenter</button></div>
+<div class="btns"><button id="bMain" class="main">Start</button><button id="bFinish" hidden>Finish</button><button id="bReset" class="danger" hidden>Discard</button></div>
+<p class="note">Keep this page open on screen. Browsers may pause GPS and speech when the phone locks.</p>
+</main>
+
+<dialog id="goalDlg"><h2>🎉 Goal reached!</h2><div id="gdBody"></div><div class="row2"><button id="bKeep" class="main">Keep running</button><button id="bGoalFin">Finish</button></div></dialog>
+<dialog id="sumDlg"><h2 id="sTitle"></h2><div id="sBody" class="sum"></div><div id="sumMap"></div><form method="dialog"><button class="main">Close</button></form></dialog>
+<dialog id="histDlg"><h2>History</h2><ul id="hList"></ul><div class="row2"><button id="bClear" class="danger">Clear all</button><form method="dialog"><button>Close</button></form></div></dialog>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script src="app.js"></script>
+</body></html>
